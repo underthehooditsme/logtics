@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input, select, button {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Log Search</h1>
+
+    <form th:action="@{/search/results}" method="get">
+        <label for="query">Search Query:</label>
+        <input type="text" id="query" name="query" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Filters:</h2>
+
+    <label for="level">Level:</label>
+    <select id="level" name="level">
+        <option value="">All</option>
+        <option value="info">Info</option>
+        <option value="warning">Warning</option>
+        <option value="error">Error</option>
+    </select>
+
+    <label for="resourceId">Resource ID:</label>
+    <input type="text" id="resourceId" name="resourceId">
+    
+    <label for="traceId">Trace ID:</label>
+    <input type="text" id="traceId" name="traceId">
+    
+    <label for="spanId">Span ID:</label>
+    <input type="text" id="spanId" name="spanId">
+    
+    <label for="commit">Commit:</label>
+    <input type="commit" id="commit" name="traceId">
+    
+    <label for="traceId">Trace ID:</label>
+    <input type="text" id="traceId" name="traceId">
+
+    <label for="timestamp">Timestamp:</label>
+    <input type="datetime-local" id="timestamp" name="timestamp">
+
+
+    <h2>Search Results:</h2>
+    <ul th:each="result : ${searchResults}">
+        <li th:text="${result}"></li>
+    </ul>
+</body>
+
+</html>
