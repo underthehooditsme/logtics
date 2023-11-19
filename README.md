@@ -13,44 +13,80 @@ This project is a log ingestor system built with Spring Boot and Elasticsearch f
 
 ### Steps
 
-1.To start the elastic search
+1.Clone the repository
+   
+git clone https://github.com/yourusername/log-ingestor.git
+
+2.To start the elastic search
 run the command inside the folder containing docker-compose.yml
 
 docker-compose up -d
 
-
-2. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/log-ingestor.git
-
-
-
-To start the elastic search
-first add the password for ELASTIC_PASSWORD,KIBANA_PASSWORD in .env file
-also add the version in .env file
-then run the command
-
-docker-compose up -d
-
-
 To stop a Docker Compose setup, you can use the following command in your terminal:
 docker-compose down
 
+to access the kibana use the url
 http://localhost:5601/
 
-Creates 62 shards in 2 nodes(where 31 shards are primary)
+Wait for some time let the elasticsearch start,it takes some time, then only build the jar
+
+3.To build the JAR and run the Spring Boot application, you can use the following commands. Open a terminal or command prompt in the directory where your build.gradle file is located, and then run the following commands:
+(Remember to replace ./gradlew with gradlew.bat on Windows systems.)
+
+a. Build the Jar
+
+   ./gradlew build
+
+b. Run the application
+
+   ./gradlew bootRun
+
+c. To run the JAR file separately (for example, on a server), you can use the following command:
+
+    java -jar build/libs/your-project-name-0.0.1-SNAPSHOT.jar
 
 
-Before running docker-compose down, make sure you are in the same directory as your docker-compose.yml file, as it operates on the current context.
-
-docker run -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 
 
-##
-for windows first download the curl and then set the path
-curl.exe -k -u elastic:password https://localhost:9200/_aliases
+4.Access the API:
+
+The Spring Boot application's API is accessible at http://localhost:3000
+Use the API endpoints for log ingestion and searching as per the defined specifications.
 
 
+###API Endpoints
 
-https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html
+1) localhost:3000/index/create
+    handled by Index Controller
+    to create the index in elasticSearch if not present
+
+2) localhost:3000/
+    handles by Logscontroller
+    to index the document in this case log
+
+3) localhost:3000/search
+    handled by SearchController
+    to serve the search page
+
+4) localhost:3000/results
+    handled by SearchController
+    to get the result
+
+###System Design
+
+logs--->SpringBootApplication---->ElasticSearch
+
+Query------>|SpringBootApplication|---->ElasticSearch
+results<----|                     |
+
+
+Issues:
+1. Bottleneck if write speed is less compare to read speed,exception can occur
+
+    Solution:We can use Kafka to solve the issue,its batch processiong capability can also help cut down write operations
+
+2.Currently the build is failing because of gradle jdk 17 version issues
+
+3.UI part should be separate with the ingestion part,separting out the concern(Microservices),thus not putting load on the ingestion machine
+
+
