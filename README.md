@@ -4,6 +4,10 @@
 
 This project is a log ingestor system built with Spring Boot and Elasticsearch for efficiently handling vast volumes of log data. It provides a simple query interface for searching logs using full-text search or specific field filters.
 
+##Working Images
+![image](https://github.com/underthehooditsme/logtics/assets/44698105/35d60118-fea3-4e04-b566-5ab3f221b190)
+
+
 ## Running the Project
 
 ### Prerequisites
