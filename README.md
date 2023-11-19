@@ -79,6 +79,9 @@ logs--->SpringBootApplication---->ElasticSearch
 Query------>|SpringBootApplication|---->ElasticSearch
 results<----|                     |
 
+### Why Elasticsearch?
+    It is a perfect search engine and db for storing and analyzing(searching)
+    it allows sharding(breaking down of documents in an index into groups called shards),which improves searching too
 
 ### Issues and Solutions:
 1. Bottleneck if write speed is less compare to read speed,exception can occur
@@ -88,5 +91,10 @@ results<----|                     |
 2.Currently the build is failing because of gradle jdk 17 version issues
 
 3.UI part should be separate with the ingestion part,separting out the concern(Microservices),thus not putting load on the ingestion machine
+
+4. Currently only 1 node is running in elasticSearch which is not right as for replication group minimum 2 is needed
+
+5. role related user access is not present 
+can easily solve by Springboot security(JWT token) and using SQL DB 
 
 
