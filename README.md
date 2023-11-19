@@ -54,7 +54,7 @@ The Spring Boot application's API is accessible at http://localhost:3000
 Use the API endpoints for log ingestion and searching as per the defined specifications.
 
 
-###API Endpoints
+### API Endpoints
 
 1) localhost:3000/index/create
     handled by Index Controller
@@ -72,7 +72,7 @@ Use the API endpoints for log ingestion and searching as per the defined specifi
     handled by SearchController
     to get the result
 
-###System Design
+### System Design
 
 logs--->SpringBootApplication---->ElasticSearch
 
@@ -80,7 +80,7 @@ Query------>|SpringBootApplication|---->ElasticSearch
 results<----|                     |
 
 
-Issues:
+### Issues and Solutions:
 1. Bottleneck if write speed is less compare to read speed,exception can occur
 
     Solution:We can use Kafka to solve the issue,its batch processiong capability can also help cut down write operations
